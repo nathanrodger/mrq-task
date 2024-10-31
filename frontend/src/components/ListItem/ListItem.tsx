@@ -2,7 +2,7 @@ import React from 'react';
 import './listItem.css';
 type ListItemProps = {
   Icon: React.ReactNode;
-  label: string;
+  label: string | React.ReactNode;
   spacing?:
     | 'space-between'
     | 'space-around'

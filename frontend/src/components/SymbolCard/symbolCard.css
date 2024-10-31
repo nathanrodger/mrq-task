@@ -25,6 +25,7 @@
     padding: 2px 8px;
     color: var(--colorWhite);
     font-weight: 600;
+    text-align: left;
     background-color: var(--colorDark);
     border-top-right-radius: 4px;
     border-top-left-radius: 4px;
@@ -32,7 +33,7 @@
 
 .symbolCard__headerImg {
     position: absolute;
-    width: 48px;
+    width: 46px;
     right: -22px;
     top: -12px;
 }
@@ -42,6 +43,10 @@
     flex-wrap: wrap;
     justify-content: space-between;
     padding: 8px;
+}
+
+.symbolCard__list {
+    padding: 4px;
 }
 
 .symbolCard__shake {

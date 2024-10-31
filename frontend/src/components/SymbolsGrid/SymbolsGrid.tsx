@@ -17,7 +17,6 @@ const SymbolsGrid = ({ onSymbolClick }: SymbolsGridProps) => {
     dispatch(fetchAllStocks());
   }, [dispatch]);
 
-
   return (
     <div className="symbolGrid">
       {stockSymbols.map((id, i) => (

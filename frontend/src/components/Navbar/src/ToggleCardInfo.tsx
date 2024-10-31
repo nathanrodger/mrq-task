@@ -10,6 +10,7 @@ const ToggleCardInfo: React.FC = () => {
     dispatch(toggleShowCardInfo());
   };
 
+
   return (
     <label className="toggleCardInfo">
       +Info
