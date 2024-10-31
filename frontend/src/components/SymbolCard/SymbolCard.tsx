@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+
 import './symbolCard.css';
 import CurrencyFormat from '@/components/CurrencyFormat/CurrencyFormat';
 import { ReactComponent as CompanyIcon } from '@/assets/company.svg';
@@ -18,6 +20,9 @@ type SymbolCardProps = {
 };
 
 const SymbolCard = ({ id, onClick, price }: SymbolCardProps) => {
+  const [shiftModifier, setShiftModifier] = useState('');
+  const [animateModifier, setAnimateModifier] = useState('');
+  const [currentPrice, setCurrentPrice] = useState(price);
   const { trend, companyName, industry, marketCap } = useAppSelector((state) => state.stocks.entities[id]);
   const showCardInfo = useAppSelector(selectShowCardInfo);
 
@@ -25,8 +30,34 @@ const SymbolCard = ({ id, onClick, price }: SymbolCardProps) => {
     onClick(id);
   };
 
+  const calcPercentage = (x : number, y : number) => {
+    const percent = (x / y) * 100;
+    return percent.toFixed(2);
+  }
+
+  useEffect(() => {
+    if (price === currentPrice) return;
+
+    const shiftClass = price > currentPrice ?
+        'symbolCard--positive' :
+        'symbolCard--negative';
+
+    const shakeClass = calcPercentage(price, currentPrice) > '25' ?
+        'symbolCard--shake' :
+        '';
+
+    setShiftModifier(shiftClass);
+    setAnimateModifier(shakeClass);
+
+    setTimeout(() => {
+        setShiftModifier('');
+        setAnimateModifier('');
+        setCurrentPrice(price);
+    }, 3000);
+  }, [price])
+
   return (
-    <button onClick={handleOnClick} className="symbolCard symbolCard--positive">
+    <button onClick={handleOnClick} className={ `symbolCard ${ shiftModifier } ${ animateModifier }` }>
       <div className="symbolCard__header">
             <span>{id}</span>
             { trend === 'UP' && <img src={ upArrowIcon } alt="Positive trend arrow" className='symbolCard__headerImg' /> }

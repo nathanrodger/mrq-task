@@ -5,6 +5,7 @@
     border: 0;
     border-radius: 4px;
     cursor: pointer;
+    animation: none;
 }
 
 .symbolCard--active {
@@ -18,6 +19,10 @@
 
 .symbolCard--negative {
     filter: drop-shadow(0 0 0.45rem red);
+}
+
+.symbolCard--shake {
+    animation: shake 0.62s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 
 .symbolCard__header {
@@ -47,10 +52,6 @@
 
 .symbolCard__list {
     padding: 4px;
-}
-
-.symbolCard__shake {
-  animation: shake 0.62s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 
 @keyframes shake {
