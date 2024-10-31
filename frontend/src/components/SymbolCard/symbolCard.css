@@ -10,7 +10,12 @@
 
 .symbolCard--active {
     filter: drop-shadow(0 0 0.45rem var(--colorDark));
-    transform: scale(2);
+    scale: 104%;
+}
+
+.symbolCard:has(~ .symbolCard--active),
+.symbolCard--active ~ .symbolCard {
+    scale: 96%;
 }
 
 .symbolCard--positive {

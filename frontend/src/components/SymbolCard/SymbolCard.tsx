@@ -9,31 +9,43 @@ import { ReactComponent as MarketCapIcon } from '@/assets/market_cap.svg';
 import upArrowIcon from '@/assets/up.png';
 import downArrowIcon from '@/assets/down.png';
 
-import { selectShowCardInfo } from '@/store/dashboardOptionsSlice';
-import { useAppSelector } from '@/hooks/redux';
+import { selectShowCardInfo, setActiveSymbol } from '@/store/dashboardOptionsSlice';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import ListItem from '@/components/ListItem';
 
 type SymbolCardProps = {
   id: string;
-  onClick: (symbolId: string) => void;
   price: number;
 };
 
-const SymbolCard = ({ id, onClick, price }: SymbolCardProps) => {
-  const [shiftModifier, setShiftModifier] = useState('');
-  const [animateModifier, setAnimateModifier] = useState('');
+const SymbolCard = ({ id, price }: SymbolCardProps) => {
+  const [cardModifier, setCardModifier] = useState({
+    shift: '',
+    animate: '',
+  });
+  const [active, setActive] = useState('');
   const [currentPrice, setCurrentPrice] = useState(price);
   const { trend, companyName, industry, marketCap } = useAppSelector((state) => state.stocks.entities[id]);
   const showCardInfo = useAppSelector(selectShowCardInfo);
+  const dispatch = useAppDispatch();
+  const activeSymbol = useAppSelector((state) => state.store.activeSymbol);
 
   const handleOnClick = () => {
-    onClick(id);
+    dispatch(setActiveSymbol(id));
   };
 
   const calcPercentage = (x : number, y : number) => {
     const percent = (x / y) * 100;
     return percent.toFixed(2);
   }
+
+  useEffect(() => {
+    setActive('');
+
+    if (id === activeSymbol) {
+        setActive('symbolCard--active');
+    }
+  }, [activeSymbol])
 
   useEffect(() => {
     if (price === currentPrice) return;
@@ -46,18 +58,24 @@ const SymbolCard = ({ id, onClick, price }: SymbolCardProps) => {
         'symbolCard--shake' :
         '';
 
-    setShiftModifier(shiftClass);
-    setAnimateModifier(shakeClass);
+    setCardModifier({
+        ...cardModifier,
+        shift: shiftClass,
+        animate: shakeClass
+    });
 
     setTimeout(() => {
-        setShiftModifier('');
-        setAnimateModifier('');
+        setCardModifier({
+            ...cardModifier,
+            shift: '',
+            animate: ''
+        });
         setCurrentPrice(price);
     }, 3000);
   }, [price])
 
   return (
-    <button onClick={handleOnClick} className={ `symbolCard ${ shiftModifier } ${ animateModifier }` }>
+    <button onClick={handleOnClick} className={ `symbolCard ${ cardModifier.shift } ${ cardModifier.animate } ${ active }` }>
       <div className="symbolCard__header">
             <span>{id}</span>
             { trend === 'UP' && <img src={ upArrowIcon } alt="Positive trend arrow" className='symbolCard__headerImg' /> }
