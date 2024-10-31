@@ -30,7 +30,6 @@
     position: relative;
     order: 2;
     flex: 1;
-    padding: 8px;
     background-color: #E2E2E4;
     overflow-y: scroll;
 
@@ -45,4 +44,6 @@
 
 .symbolsView__cards {
     position: absolute;
+    width: 100%;
+    padding: 8px;
 }

@@ -84,6 +84,7 @@ select {
     padding: 12px 24px;
     background-color: rgba(14, 17, 35, 0.02);
     min-height: 100%;
+    overflow: hidden;
 }
 
 @media (max-width: 767px) {

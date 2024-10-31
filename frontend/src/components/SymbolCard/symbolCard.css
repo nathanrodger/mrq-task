@@ -1,7 +1,47 @@
 .symbolCard {
-  border: 2px solid black; /* just for visibility, feel free to remove it */
-  margin: 10px; /* just for visibility, feel free to remove it */
-  padding: 10px; /* just for visibility, feel free to remove it */
+    margin: 10px;
+    padding: 0;
+    background-color: var(--colorWhite);
+    border: 0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.symbolCard--active {
+    filter: drop-shadow(0 0 0.45rem var(--colorDark));
+    transform: scale(2);
+}
+
+.symbolCard--positive {
+    filter: drop-shadow(0 0 0.45rem green);
+}
+
+.symbolCard--negative {
+    filter: drop-shadow(0 0 0.45rem red);
+}
+
+.symbolCard__header {
+    position: relative;
+    padding: 2px 8px;
+    color: var(--colorWhite);
+    font-weight: 600;
+    background-color: var(--colorDark);
+    border-top-right-radius: 4px;
+    border-top-left-radius: 4px;
+}
+
+.symbolCard__headerImg {
+    position: absolute;
+    width: 48px;
+    right: -22px;
+    top: -12px;
+}
+
+.symbolCard__content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 8px;
 }
 
 .symbolCard__shake {
