@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
-import { selectShowCardInfo, setActiveSymbol } from '@/store/dashboardOptionsSlice';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux';
+import { useState, useEffect, memo, useMemo } from 'react';
+import { useAppSelector } from '@/hooks/redux';
 import ListItem from '@/components/ListItem';
 import CurrencyFormat from '@/components/CurrencyFormat';
 
@@ -15,36 +14,23 @@ import './symbolCard.css';
 type SymbolCardProps = {
   id: string;
   price: number;
+  showCardInfo: boolean;
+  isActive: boolean;
+  onClick: () => void;
 };
 
-const SymbolCard = ({ id, price }: SymbolCardProps) => {
+const SymbolCard = ({ id, price, showCardInfo, isActive, onClick }: SymbolCardProps) => {
   const [cardModifier, setCardModifier] = useState({
     shift: '',
     animate: '',
   });
-  const [active, setActive] = useState('');
   const [currentPrice, setCurrentPrice] = useState(price);
   const { trend, companyName, industry, marketCap } = useAppSelector((state) => state.stocks.entities[id]);
-  const showCardInfo = useAppSelector(selectShowCardInfo);
-  const dispatch = useAppDispatch();
-  const activeSymbol = useAppSelector((state) => state.store.activeSymbol);
 
-  const handleOnClick = () => {
-    dispatch(setActiveSymbol(id));
-  };
-
-  const calcPercentage = (x: number, y: number) => {
+  const calcPercentage = useMemo(() => (x: number, y: number) => {
     const percent = (x / y) * 100;
     return percent.toFixed(2);
-  }
-
-  useEffect(() => {
-    setActive('');
-
-    if (id === activeSymbol) {
-      setActive('symbolCard--active');
-    }
-  }, [activeSymbol])
+  }, []);
 
   useEffect(() => {
     if (price === currentPrice) return;
@@ -58,23 +44,21 @@ const SymbolCard = ({ id, price }: SymbolCardProps) => {
       '';
 
     setCardModifier({
-      ...cardModifier,
       shift: shiftClass,
       animate: shakeClass
     });
 
     setTimeout(() => {
       setCardModifier({
-        ...cardModifier,
         shift: '',
         animate: ''
       });
       setCurrentPrice(price);
     }, 3000);
-  }, [price])
+  }, [price]);
 
   return (
-    <button onClick={handleOnClick} className={`symbolCard ${cardModifier.shift} ${cardModifier.animate} ${active}`}>
+    <button onClick={onClick} className={`symbolCard ${cardModifier.shift} ${cardModifier.animate} ${isActive ? 'symbolCard--active' : ''}`}>
       <div className="symbolCard__header">
         <span>{id}</span>
         {trend === 'UP' && <img src={upArrowIcon} alt="Positive trend arrow" className='symbolCard__headerImg' />}
@@ -97,4 +81,4 @@ const SymbolCard = ({ id, price }: SymbolCardProps) => {
   );
 };
 
-export default SymbolCard;
+export default memo(SymbolCard);
