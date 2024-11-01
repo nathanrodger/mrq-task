@@ -10,9 +10,18 @@ const PriceChart = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    const abortController = new AbortController();
+
     if (activeSymbol !== null) {
-        dispatch(fetchPriceHistory(activeSymbol));
+        dispatch(fetchPriceHistory({
+            symbolId: activeSymbol,
+            signal: abortController.signal
+        }));
     }
+
+    return () => {
+        abortController.abort();
+    };
   }, [dispatch, activeSymbol]);
 
   const apiState = useAppSelector(selectors.apiState);
