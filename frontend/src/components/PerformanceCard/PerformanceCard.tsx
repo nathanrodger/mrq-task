@@ -7,6 +7,7 @@ type PerformanceCardProps = {
   title: string;
   volume: number;
   change: number;
+  trend?: 'UP' | 'DOWN' | null;
 };
 
 const PerformanceCard = ({ title, volume, change }: PerformanceCardProps) => {

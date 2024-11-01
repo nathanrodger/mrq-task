@@ -1,62 +1,62 @@
 .symbolCard {
-    margin: 10px;
-    padding: 0;
-    background-color: var(--colorWhite);
-    border: 0;
-    border-radius: 4px;
-    cursor: pointer;
-    animation: none;
+  margin: 10px;
+  padding: 0;
+  background-color: var(--colorWhite);
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  animation: none;
 }
 
 .symbolCard--active {
-    filter: drop-shadow(0 0 0.45rem var(--colorDark));
-    scale: 104%;
+  filter: drop-shadow(0 0 0.45rem var(--colorDark));
+  scale: 104%;
 }
 
 .symbolCard:has(~ .symbolCard--active),
 .symbolCard--active ~ .symbolCard {
-    scale: 96%;
+  scale: 96%;
 }
 
 .symbolCard--positive {
-    filter: drop-shadow(0 0 0.45rem green);
+  filter: drop-shadow(0 0 0.45rem green);
 }
 
 .symbolCard--negative {
-    filter: drop-shadow(0 0 0.45rem red);
+  filter: drop-shadow(0 0 0.45rem red);
 }
 
 .symbolCard--shake {
-    animation: shake 0.62s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  animation: shake 0.62s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 
 .symbolCard__header {
-    position: relative;
-    padding: 2px 8px;
-    color: var(--colorWhite);
-    font-weight: 600;
-    text-align: left;
-    background-color: var(--colorDark);
-    border-top-right-radius: 4px;
-    border-top-left-radius: 4px;
+  position: relative;
+  padding: 2px 8px;
+  color: var(--colorWhite);
+  font-weight: 600;
+  text-align: left;
+  background-color: var(--colorDark);
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
 }
 
 .symbolCard__headerImg {
-    position: absolute;
-    width: 46px;
-    right: -22px;
-    top: -12px;
+  position: absolute;
+  width: 46px;
+  right: -22px;
+  top: -12px;
 }
 
 .symbolCard__content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 8px;
 }
 
 .symbolCard__list {
-    padding: 4px;
+  padding: 4px;
 }
 
 @keyframes shake {

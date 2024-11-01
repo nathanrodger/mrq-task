@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
-import './priceChart.css';
 import { Line, LineChart, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { fetchPriceHistory, selectors } from '@/store/priceHistorySlice';
 import Loading from '@/components/Loading';
+
+import './priceChart.css';
 
 const PriceChart = () => {
   const activeSymbol = useAppSelector((state) => state.store.activeSymbol);
@@ -13,14 +14,14 @@ const PriceChart = () => {
     const abortController = new AbortController();
 
     if (activeSymbol !== null) {
-        dispatch(fetchPriceHistory({
-            symbolId: activeSymbol,
-            signal: abortController.signal
-        }));
+      dispatch(fetchPriceHistory({
+        symbolId: activeSymbol,
+        signal: abortController.signal
+      }));
     }
 
     return () => {
-        abortController.abort();
+      abortController.abort();
     };
   }, [dispatch, activeSymbol]);
 

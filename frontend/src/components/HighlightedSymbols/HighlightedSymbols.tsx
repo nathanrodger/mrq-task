@@ -1,8 +1,7 @@
-import React from 'react';
-import './highlightedSymbols.css';
-
 import PerformanceCard from '@/components/PerformanceCard';
 import Row from '@/components/Row';
+
+import './highlightedSymbols.css';
 
 type HighlightedSymbol = {
   trend?: 'UP' | 'DOWN' | null;
