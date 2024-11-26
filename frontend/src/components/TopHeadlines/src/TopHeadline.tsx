@@ -1,4 +1,3 @@
-import React from 'react';
 import ListItem from '@/components/ListItem';
 import PerformanceEmoji from '@/components/TopHeadlines/src/PerformanceEmoji';
 import { stockTypes } from '@/lib/types';

@@ -29,14 +29,28 @@ const initialState: PriceHistoryState = {
   }
 };
 
-export const fetchPriceHistory = createAsyncThunk(
+export const fetchPriceHistory = createAsyncThunk<
+  PriceHistoryResponse,
+  { symbolId: string; signal: AbortSignal },
+  { rejectValue: string }
+>(
   'stocks/fetchPriceHistory',
-  // if you type your function argument here
-  async (symbolId: string, thunkAPI) => {
-    const response = await fetch(`http://localhost:3100/api/stock/history/${symbolId}`, {
-      signal: thunkAPI.signal
-    });
-    return (await response.json()) as PriceHistoryResponse;
+  async ({ symbolId, signal }, thunkAPI) => {
+    try {
+        const response = await fetch(`http://localhost:3100/api/stock/history/${symbolId}`, {
+          signal: signal
+        });
+
+        if (!response.ok) {
+            return thunkAPI.rejectWithValue('Failed to fetch price history');
+        }
+        return (await response.json()) as PriceHistoryResponse;
+    } catch (error: any) {
+        if (error.name === 'AbortError') {
+            return thunkAPI.rejectWithValue('Fetch aborted');
+        }
+        throw error;
+    }
   }
 );
 
@@ -59,7 +73,9 @@ const priceHistorySlice = createSlice({
     });
 
     builder.addCase(fetchPriceHistory.rejected, (state, action) => {
-      if (!action.meta.aborted) {
+      if (action.meta.arg.signal.aborted) {
+        state.apiState.loading = true;
+      } else {
         state.apiState.error = true;
         state.apiState.loading = false;
       }

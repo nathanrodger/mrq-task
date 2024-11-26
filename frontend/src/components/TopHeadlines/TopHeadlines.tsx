@@ -1,4 +1,3 @@
-import React from 'react';
 import './topHeadlines.css';
 
 import Row from '@/components/Row';

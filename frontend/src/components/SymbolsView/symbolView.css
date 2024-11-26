@@ -1,0 +1,49 @@
+.symbolsView {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+.symbolsView__grid {
+  display: flex;
+  gap: 20px;
+  flex: 1;
+  flex-direction: column;
+
+  @media(min-width: 1024px) {
+    flex-direction: row;
+  }
+}
+
+.symbolsView__chart {
+  order: 1;
+  padding: 12px 18px;
+
+  @media(min-width: 1024px) {
+    order: 2;
+    padding: 0;
+  }
+}
+
+.symbolsView__content {
+  position: relative;
+  order: 2;
+  flex: 1;
+  background-color: #E2E2E4;
+  overflow-y: scroll;
+
+  @media(min-width: 1024px) {
+    order: 1;
+  }
+}
+
+.symbolsView__content::-webkit-scrollbar {
+  width: 0px;
+}
+
+.symbolsView__cards {
+  position: absolute;
+  width: 100%;
+  padding: 8px;
+}
